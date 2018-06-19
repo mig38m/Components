@@ -1,0 +1,29 @@
+
+class Person {
+  @observable firstName = "Michel";
+  @observable lastName = "Weststrate";
+  @observable nickName;
+  
+  @computed get fullName() {
+    return this.firstName + " " + this.lastName;
+  }
+}
+
+const michel = new Person();
+
+// Reaction: log the profile info whenever it changes
+autorun(() => console.log(person.nickName ? person.nickName : person.fullName));
+
+// Example React component that observes state
+const profileView = observer(props => {
+  if (props.person.nickName)
+    return <div>{props.person.nickName}</div>
+  else
+    return <div>{props.person.fullName}</div>
+});
+
+// Action:
+setTimeout(() => michel.nickName = "mweststrate", 5000)
+
+React.render(React.createElement(profileView, { person: michel }), document.body);
+// This snippet is runnable in jsfiddle: https://jsfiddle.net/mweststrate/049r6jox/
